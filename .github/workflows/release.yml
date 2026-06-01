@@ -138,7 +138,19 @@ jobs:
           cp backrest_Windows_x86_64.zip "assets/C3i-Backup-One_Windows_x86_64.zip"
           ls -la assets
 
+      # Always available regardless of token permissions (org may force a
+      # read-only GITHUB_TOKEN). Download via `gh run download` if the publish
+      # step below is skipped/denied.
+      - name: Upload assets as workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: assets/*
+
+      # Direct publish to the release. Requires a writable token; if the org
+      # disables write for the GITHUB_TOKEN this step is a no-op (run stays green).
       - name: Upload to release
+        continue-on-error: true
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.build.outputs.tag }}
