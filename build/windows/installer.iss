@@ -1,5 +1,6 @@
-#define B "Backrest"
-#define Website "https://github.com/garethgeorge/backrest/"
+#define B "C3i Backup One"
+#define BSlug "C3iBackupOne"
+#define Website "https://github.com/C3i-Servicios-Informaticos/c3i_backup_one/"
 ; The following is needed to extract the version from the change log.
 ; If the application executable had the version info, then could use built-in GetVersion* functions.
 #define fHandle FileOpen("CHANGELOG.md")
@@ -16,7 +17,7 @@
 AppName={#B}
 AppVersion={#BackrestVersion}
 AppVerName={#B} {#BackrestVersion}
-AppPublisher=garethgeorge
+AppPublisher=C3i Servicios Informáticos
 AppPublisherURL={#Website}
 VersionInfoVersion={#BackrestVersion}
 DefaultDirName={autopf}\{#B}
@@ -27,7 +28,7 @@ UninstallDisplayIcon={app}\icon.ico
 #ifndef Arch
   #define Arch "x86_64"
 #endif
-OutputBaseFilename={#B}Setup-{#Arch}
+OutputBaseFilename={#BSlug}Setup-{#Arch}
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 UsePreviousPrivileges=no
@@ -77,7 +78,7 @@ Name: "{group}\{#B} website"; Filename: "{#Website}"
 Name: "{autodesktop}\{#B}{code:GetIconSuffix}"; Filename: "http://localhost:{code:GetPort}/"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
 
 [Messages]
-PrivilegesRequiredOverrideText2=%1 can be installed to run with standard or administrative privileges.%n%nIf you need to use Windows VSS feature with "--use-fs-snapshot" restic option, select the administrative option.%nProtecting Backrest web UI with a password is highly recommended, especially with the administrative install.
+PrivilegesRequiredOverrideText2=%1 can be installed to run with standard or administrative privileges.%n%nIf you need to use Windows VSS feature with "--use-fs-snapshot" restic option, select the administrative option.%nProtecting the C3i Backup One web UI with a password is highly recommended, especially with the administrative install.
 PrivilegesRequiredOverrideAllUsers=Install &system-wide with administrative privileges
 
 [Run]
@@ -213,7 +214,7 @@ begin
     else if CompResult > 0 then Msg := 'downgrade to'
     else Msg := 'upgrade/reinstall/downgrade';
   end;
-  MsgBox('Detected existing installation of Backrest ' + InstalledVersion + 
+  MsgBox('Detected existing installation of C3i Backup One ' + InstalledVersion +
     ' in ' + Chr(13) + Chr(10) + AppDir + Chr(13) + Chr(10) + Chr(13) + Chr(10) +
     'Setup will ' + Msg + ' version ' + AppVersion + '.', mbInformation, MB_OK);
 end;
@@ -303,7 +304,7 @@ begin
     end
     else begin
     // But allow and notify about an existing admin instance under a different user, if present.
-      MsgBox('Detected an existing administrative installation of Backrest ' + PreviousVersionAdmin + ' under user ' +
+      MsgBox('Detected an existing administrative installation of C3i Backup One ' + PreviousVersionAdmin + ' under user ' +
       PreviousAdminUser + '.' + Chr(13) + Chr(10) + Chr(13) + Chr(10) +
       'Setup will install a non-administrative instance for the current user.', mbInformation, MB_OK);
     end;
@@ -315,7 +316,7 @@ begin
     // Warn if attempting to upgrade/reinstall under a different user.
     if (Pos('adminstartcurrent', PreviousAdminTasks) > 0) and (GetUserNameString <> PreviousAdminUser) then
       MsgBox('Warning! Previous installation of this type was done by user ' + PreviousAdminUser +
-      '. If you proceed, Backrest will be reinstalled to run under the current user. Configuration will be lost.', mbError, MB_OK);
+      '. If you proceed, C3i Backup One will be reinstalled to run under the current user. Configuration will be lost.', mbError, MB_OK);
   end;
 end;
 
@@ -324,8 +325,8 @@ begin
   Result := True;
   AssignGlobals;
   if AdminInstallationExists and UserInstallationExists then
-    MsgBox('Detected two existing installations of Backrest. Ensure you are running the correct uninstaller. Windows Settings - Apps panel shows only one entry at a time.' + Chr(13) + Chr(10) +
-    'Use Control Panel - Programs and Features instead to identify the correct uninstaller. Or run unins000.exe directly from the appropriate Backrest directory.', mbInformation, MB_OK);
+    MsgBox('Detected two existing installations of C3i Backup One. Ensure you are running the correct uninstaller. Windows Settings - Apps panel shows only one entry at a time.' + Chr(13) + Chr(10) +
+    'Use Control Panel - Programs and Features instead to identify the correct uninstaller. Or run unins000.exe directly from the appropriate C3i Backup One directory.', mbInformation, MB_OK);
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
@@ -342,7 +343,7 @@ begin
       StopBackrest;
     usDone:
     begin
-      if MsgBox('Do you want to delete Backrest configuration in this location?' + Chr(13) + Chr(10) + BackrestConfig,
+      if MsgBox('Do you want to delete C3i Backup One configuration in this location?' + Chr(13) + Chr(10) + BackrestConfig,
         mbConfirmation, MB_YESNO or MB_DEFBUTTON2) = IDYES then
         if DelTree(BackrestConfig, True, True, True) then MsgBox('Done!', mbInformation, MB_OK)
         else MsgBox('Failed to remove the path', mbInformation, MB_OK);

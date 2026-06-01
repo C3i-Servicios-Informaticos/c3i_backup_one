@@ -1,18 +1,145 @@
-name: Tagged Release
+name: Release (Windows)
+
+# Builds the Windows tray binary on Ubuntu (fyne.io/systray needs no CGO on
+# Windows), compiles the Inno Setup installer on a Windows runner, and attaches
+# both the .zip and the installer .exe to the GitHub release for the tag.
+#
+# Triggers:
+#   - pushing a tag like v1.2.3 (creates/updates that tag's release)
+#   - manual run, passing an existing tag to (re)build and attach assets to
 
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "v*"
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to build and attach assets to (e.g. v1.13.0-c3i.1)"
+        required: true
+        type: string
 
 permissions:
   contents: write
-  packages: write
 
 jobs:
-  call-reusable-release:
-    uses: ./.github/workflows/reusable-release.yml
-    with:
-      snapshot: false
-    secrets: inherit
+  build:
+    name: Build Windows binary (Ubuntu)
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
+    steps:
+      - name: Resolve ref
+        id: ref
+        run: echo "ref=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.ref }}
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Compute version vars
+        id: vars
+        run: |
+          TAG="${{ steps.ref.outputs.ref }}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build web UI (windows variant)
+        run: |
+          cd webui
+          pnpm install
+          pnpm run build-windows
+
+      - name: Build backrest.exe (windows/amd64, tray)
+        env:
+          CGO_ENABLED: "1"
+          GOOS: windows
+          GOARCH: amd64
+        run: |
+          go build -tags tray \
+            -ldflags "-s -w -H windowsgui -X main.version=${{ steps.vars.outputs.version }} -X main.commit=${{ github.sha }}" \
+            -o backrest.exe ./cmd/backrest/
+
+      - name: Package zip
+        run: |
+          mkdir -p stage
+          cp backrest.exe LICENSE README.md CHANGELOG.md stage/
+          (cd stage && zip -r ../backrest_Windows_x86_64.zip .)
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-zip
+          path: backrest_Windows_x86_64.zip
+
+  installer:
+    name: Build installer & publish (Windows)
+    needs: build
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Resolve ref
+        id: ref
+        shell: bash
+        run: echo "ref=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.ref }}
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows-zip
+
+      - name: Download restic (windows amd64)
+        shell: powershell
+        run: |
+          $latest = Invoke-RestMethod -Uri "https://api.github.com/repos/restic/restic/releases/latest"
+          $tag = $latest.tag_name
+          if ($tag.StartsWith("v")) { $tag = $tag.Substring(1) }
+          Write-Host "restic version: $tag"
+          $url = "https://github.com/restic/restic/releases/download/v$tag/restic_${tag}_windows_amd64.zip"
+          Invoke-WebRequest -Uri $url -OutFile "restic.zip"
+          Expand-Archive "restic.zip" -DestinationPath "restic_extracted" -Force
+          $exe = Get-ChildItem -Recurse -Path "restic_extracted" -Filter "restic*.exe" | Select-Object -First 1
+          Copy-Item $exe.FullName -Destination "restic.exe" -Force
+
+      - name: Compile Inno Setup installer
+        shell: powershell
+        run: |
+          $src = "backrest_Windows_x86_64"
+          Expand-Archive ".\$src.zip" -DestinationPath $src -Force
+          Copy-Item "build\windows\*" $src -Force
+          Copy-Item "restic.exe" "$src\restic.exe" -Force
+          & "c:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DArch=x86_64 "$src\installer.iss"
+          New-Item -ItemType Directory -Force -Path "windows_installers" | Out-Null
+          Copy-Item "$src\Output\*" "windows_installers" -Force
+          Get-ChildItem "windows_installers"
+
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          mkdir -p assets
+          cp windows_installers/*.exe assets/
+          cp backrest_Windows_x86_64.zip "assets/C3i-Backup-One_Windows_x86_64.zip"
+          ls -la assets
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.tag }}
+          files: assets/*
