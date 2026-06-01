@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: "Backrest"
+  name: "C3i Backup One"
   text: "Web UI and orchestrator for Restic backup."
-  tagline: "Backrest is a web-accessible backup solution built on top of restic and providing a WebUI which wraps the restic CLI and makes it easy to create repos, browse snapshots, and restore files. Additionally, Backrest can run in the background and take an opinionated approach to scheduling snapshots and orchestrating repo health operations."
+  tagline: "C3i Backup One is a web-accessible backup solution built on top of restic and providing a WebUI which wraps the restic CLI and makes it easy to create repos, browse snapshots, and restore files. Additionally, C3i Backup One can run in the background and take an opinionated approach to scheduling snapshots and orchestrating repo health operations."
   actions:
     - theme: brand
       text: Get started
@@ -41,7 +41,7 @@ cd backrest && ./install.sh
 sudo mv backrest /usr/local/bin/backrest
 sudo tee /etc/systemd/system/backrest.service > /dev/null <<EOT
 [Unit]
-Description=Backrest
+Description=C3i Backup One
 After=network.target
 
 [Service]

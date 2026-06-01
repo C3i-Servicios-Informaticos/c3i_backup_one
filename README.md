@@ -16,11 +16,11 @@
 
 **Overview**
 
-Backrest is a web-accessible backup solution built on top of [restic](https://restic.net/). Backrest provides a WebUI which wraps the restic CLI and makes it easy to create repos, browse snapshots, and restore files. Additionally, Backrest can run in the background and take an opinionated approach to scheduling snapshots and orchestrating repo health operations.
+C3i Backup One is a web-accessible backup solution built on top of [restic](https://restic.net/). C3i Backup One provides a WebUI which wraps the restic CLI and makes it easy to create repos, browse snapshots, and restore files. Additionally, C3i Backup One can run in the background and take an opinionated approach to scheduling snapshots and orchestrating repo health operations.
 
-By building on restic, Backrest leverages its mature, fast, reliable, and secure backup capabilities while adding an intuitive interface.
+By building on restic, C3i Backup One leverages its mature, fast, reliable, and secure backup capabilities while adding an intuitive interface.
 
-Built with Go, Backrest is distributed as a standalone, lightweight binary with restic as its sole dependency. It can securely create new repositories or manage existing ones. Once storage is configured, the WebUI handles most operations, while still allowing direct access to the powerful [restic CLI](https://restic.readthedocs.io/en/latest/manual_rest.html) for advanced operations when needed.
+Built with Go, C3i Backup One is distributed as a standalone, lightweight binary with restic as its sole dependency. It can securely create new repositories or manage existing ones. Once storage is configured, the WebUI handles most operations, while still allowing direct access to the powerful [restic CLI](https://restic.readthedocs.io/en/latest/manual_rest.html) for advanced operations when needed.
 
 ## Key Features
 
@@ -53,20 +53,20 @@ Built with Go, Backrest is distributed as a standalone, lightweight binary with 
 
 # User Guide
 
-[See the Backrest docs](https://garethgeorge.github.io/backrest/introduction/getting-started).
+[See the C3i Backup One docs](https://garethgeorge.github.io/backrest/introduction/getting-started).
 
 ---
 
 # Installation
 
-Backrest is packaged as a single executable. It runs directly on Linux, macOS, and Windows. [restic](https://github.com/restic/restic) is downloaded automatically on first run.
+C3i Backup One is packaged as a single executable. It runs directly on Linux, macOS, and Windows. [restic](https://github.com/restic/restic) is downloaded automatically on first run.
 
-Once installed, access Backrest at `http://localhost:9898` (default port). First-time setup will prompt for username and password creation.
+Once installed, access C3i Backup One at `http://localhost:9898` (default port). First-time setup will prompt for username and password creation.
 
 > [!NOTE]
 > To change the default port, set the `BACKREST_PORT` environment variable (e.g., `BACKREST_PORT=0.0.0.0:9898` to listen on all interfaces). The install script accepts `--allow-remote-access` as a shortcut for this.
 >
-> Backrest will use your system's installed version of restic if it's available and compatible. If not, Backrest will download and install a suitable version in its data directory, keeping it updated. To use a specific restic binary, set the `BACKREST_RESTIC_COMMAND` environment variable to the desired path.
+> C3i Backup One will use your system's installed version of restic if it's available and compatible. If not, C3i Backup One will download and install a suitable version in its data directory, keeping it updated. To use a specific restic binary, set the `BACKREST_RESTIC_COMMAND` environment variable to the desired path.
 
 ## Linux & macOS (Recommended)
 
@@ -86,7 +86,7 @@ curl -fsSL https://raw.githubusercontent.com/garethgeorge/backrest/main/install.
 curl -fsSL https://raw.githubusercontent.com/garethgeorge/backrest/main/install.sh | bash -s -- --uninstall
 ```
 
-The service runs as your user by default (so config and data live under your `$HOME`). To install as `root` instead, pass `--root`. After install, access Backrest at `http://localhost:9898`.
+The service runs as your user by default (so config and data live under your `$HOME`). To install as `root` instead, pass `--root`. After install, access C3i Backup One at `http://localhost:9898`.
 
 > [!TIP]
 > Review [install.sh](./install.sh) before piping it into a shell. You can also clone the repo and run `./install.sh` locally; it accepts the same flags.
@@ -102,11 +102,11 @@ brew services start backrest
 ```
 
 > [!NOTE]
-> You may need to grant Full Disk Access to Backrest. Go to `System Preferences > Security & Privacy > Privacy > Full Disk Access` and add `/usr/local/bin/backrest`.
+> You may need to grant Full Disk Access to C3i Backup One. Go to `System Preferences > Security & Privacy > Privacy > Full Disk Access` and add `/usr/local/bin/backrest`.
 
 ### Arch Linux (AUR)
 
-[Backrest on AUR](https://aur.archlinux.org/packages/backrest) is third-party (not maintained by the Backrest project) and tweaks the systemd unit; see the [AUR service file](https://aur.archlinux.org/cgit/aur.git/tree/backrest@.service?h=backrest) for details.
+[C3i Backup One on AUR](https://aur.archlinux.org/packages/backrest) is third-party (not maintained by the C3i Backup One project) and tweaks the systemd unit; see the [AUR service file](https://aur.archlinux.org/cgit/aur.git/tree/backrest@.service?h=backrest) for details.
 
 ```sh
 paru -Sy backrest  # or: yay -Sy backrest
@@ -149,7 +149,7 @@ services:
 
 ## Windows
 
-Download the Windows installer for your architecture from the [releases page](https://github.com/garethgeorge/backrest/releases). The installer, named `Backrest-setup-[arch].exe`, places Backrest and a GUI tray application in `%localappdata%\Programs\Backrest\`. The tray application, set to start on login, monitors Backrest.
+Download the Windows installer for your architecture from the [releases page](https://github.com/garethgeorge/backrest/releases). The installer, named `backrest-setup-[arch].exe`, places C3i Backup One and a GUI tray application in `%localappdata%\Programs\Backrest\`. The tray application, set to start on login, monitors C3i Backup One.
 
 > [!TIP]
 > To override the default port before installation, set a user environment variable named `BACKREST_PORT`. On Windows 10+, navigate to Settings > About > Advanced system settings > Environment Variables. Under "User variables", create a new variable `BACKREST_PORT` with the value `127.0.0.1:port` (e.g. `127.0.0.1:8080`). If changing post-installation, re-run the installer to update shortcuts with the new port.
@@ -165,7 +165,7 @@ Download the Windows installer for your architecture from the [releases page](ht
 | `BACKREST_PORT`           | Port to bind to             | 127.0.0.1:9898 (or 0.0.0.0:9898 for the docker images)                                                              |
 | `BACKREST_CONFIG`         | Path to config file         | `$HOME/.config/backrest/config.json`<br>(or, if `$XDG_CONFIG_HOME` is set, `$XDG_CONFIG_HOME/backrest/config.json`) |
 | `BACKREST_DATA`           | Path to the data directory  | `$HOME/.local/share/backrest`<br>(or, if `$XDG_DATA_HOME` is set, `$XDG_DATA_HOME/backrest`)                        |
-| `BACKREST_RESTIC_COMMAND` | Path to restic binary       | Defaults to a Backrest managed version of restic at `$XDG_DATA_HOME/backrest/restic-x.x.x`                          |
+| `BACKREST_RESTIC_COMMAND` | Path to restic binary       | Defaults to a C3i Backup One managed version of restic at `$XDG_DATA_HOME/backrest/restic-x.x.x`                          |
 | `XDG_CACHE_HOME`          | Path to the cache directory |                                                                                                                     |
 
 ## Environment Variables (Windows)
@@ -175,7 +175,7 @@ Download the Windows installer for your architecture from the [releases page](ht
 | `BACKREST_PORT`           | Port to bind to             | 127.0.0.1:9898                                                                             |
 | `BACKREST_CONFIG`         | Path to config file         | `%appdata%\backrest\config.json`                                                           |
 | `BACKREST_DATA`           | Path to the data directory  | `%appdata%\backrest\data`                                                                  |
-| `BACKREST_RESTIC_COMMAND` | Path to restic binary       | Defaults to a Backrest managed version of restic in `C:\Program Files\restic\restic-x.x.x` |
+| `BACKREST_RESTIC_COMMAND` | Path to restic binary       | Defaults to a C3i Backup One managed version of restic in `C:\Program Files\restic\restic-x.x.x` |
 | `XDG_CACHE_HOME`          | Path to the cache directory |                                                                                            |
 
 
@@ -230,7 +230,7 @@ The dev container uses Nix and direnv to provide all dependencies. When the cont
 1. Clone this repository
 2. Open this folder in VSCode
 3. When prompted, click on `Open in Container` button, or run `> Dev Containers: Rebuild and Reopen in Containers` command
-4. When the container is started, go to `Run and Debug`, choose `Debug Backrest (backend+frontend)` and run it
+4. When the container is started, go to `Run and Debug`, choose `Debug C3i Backup One (backend+frontend)` and run it
 
 > [!NOTE]
 > Provided launch configuration has hot reload for the typescript frontend.

@@ -1,18 +1,18 @@
 # Operations Guide
 
-This guide details the core operations available in Backrest and how to configure them effectively. "Operations" in Backrest refer to any task that interacts with your repository, such as creating backups, managing retention, verifying integrity, or restoring files.
+This guide details the core operations available in C3i Backup One and how to configure them effectively. "Operations" in C3i Backup One refer to any task that interacts with your repository, such as creating backups, managing retention, verifying integrity, or restoring files.
 
 ## Restic Integration
 
-Backrest executes operations through the [restic](https://restic.net) backup tool. Each operation maps to specific restic commands with additional functionality provided by Backrest.
+C3i Backup One executes operations through the [restic](https://restic.net) backup tool. Each operation maps to specific restic commands with additional functionality provided by C3i Backup One.
 
 ### Binary Management
-- **Location**: Backrest searches for the restic binary in the following order:
+- **Location**: C3i Backup One searches for the restic binary in the following order:
   1. Data directory (typically `~/.local/share/backrest`)
   2. `/bin/` directory
   3. The system `$PATH`
-- **Version Requirement**: Backrest is only tested against the latest version of restic. It will selectively reject outdated versions.
-- **Auto-download**: If no valid binary is found, Backrest downloads a verified version from [GitHub releases](https://github.com/restic/restic/releases).
+- **Version Requirement**: C3i Backup One is only tested against the latest version of restic. It will selectively reject outdated versions.
+- **Auto-download**: If no valid binary is found, C3i Backup One downloads a verified version from [GitHub releases](https://github.com/restic/restic/releases).
 - **Verification**: Downloads are verified using SHA256 checksums signed by restic maintainers.
 - **Override**: Set `BACKREST_RESTIC_COMMAND` environment variable to use a custom restic binary.
 
@@ -24,12 +24,12 @@ Backrest executes operations through the [restic](https://restic.net) backup too
   - Full logs: Available via **[View Logs]** in the UI, truncated to 32KB (split if longer)
 
 ::: info
-If an operation fails, you can always find the full diagnostic logs in the Backrest UI by clicking on the specific operation block in the history tree. 
+If an operation fails, you can always find the full diagnostic logs in the C3i Backup One UI by clicking on the specific operation block in the history tree. 
 :::
 
 ## Scheduling System
 
-Backrest provides flexible scheduling options for all operations through policies and clocks.
+C3i Backup One provides flexible scheduling options for all operations through policies and clocks.
 
 ### Schedule Policies
 
@@ -83,7 +83,7 @@ Creates snapshots of your data using `restic backup`.
 
 **Snapshot Tags:**
 - `plan:{PLAN_ID}`: Groups snapshots by backup plan
-- `created-by:{INSTANCE_ID}`: Identifies creating Backrest instance
+- `created-by:{INSTANCE_ID}`: Identifies creating C3i Backup One instance
 
 ### 🕰️ Forget
 [Restic Documentation](https://restic.readthedocs.io/en/latest/060_forget.html)

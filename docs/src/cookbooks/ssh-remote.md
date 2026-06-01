@@ -1,24 +1,24 @@
 # Using SSH (SFTP) Remotes with Docker Compose
 
-This guide details how to configure a Backrest container to back up to a remote server using SSH (SFTP).
+This guide details how to configure a C3i Backup One container to back up to a remote server using SSH (SFTP).
 
 This is an advanced topic that assumes you have a basic familiarity with SSH, public key authentication, and Docker Compose.
 
 ## Prerequisites
 
-- A working Docker Compose setup for Backrest.
+- A working Docker Compose setup for C3i Backup One.
 - An SSH client installed on your local machine (for setup).
 - A remote server with SSH enabled and a user account with write permissions to the backup location.
 
 ## Setup
 
-The strategy is to create SSH keys and configuration on your Docker host, then securely mount them read-only into the Backrest container.
+The strategy is to create SSH keys and configuration on your Docker host, then securely mount them read-only into the C3i Backup One container.
 
 All commands below should be run on the Docker host, in the same directory as your `docker-compose.yml` file.
 
 ### Step 1: Create a Local Directory for SSH Config
 
-First, create a directory to store your SSH key and configuration files. This keeps your Backrest-related files organized.
+First, create a directory to store your SSH key and configuration files. This keeps your C3i Backup One-related files organized.
 
 ```bash
 mkdir -p ./backrest/ssh
@@ -26,13 +26,13 @@ mkdir -p ./backrest/ssh
 
 ### Step 2: Generate an SSH Key
 
-Next, generate a new SSH key pair specifically for Backrest.
+Next, generate a new SSH key pair specifically for C3i Backup One.
 
 ```bash
 ssh-keygen -t ed25519 -f ./backrest/ssh/id_rsa -C "backrest-backup-key"
 ```
 
-When prompted for a passphrase, you can leave it empty by pressing Enter. Using a passphrase adds another layer of security but requires more complex setup to use with an automated tool like Backrest.
+When prompted for a passphrase, you can leave it empty by pressing Enter. Using a passphrase adds another layer of security but requires more complex setup to use with an automated tool like C3i Backup One.
 
 ### Step 3: Copy the Public Key to Your Remote Server
 
@@ -62,7 +62,7 @@ ssh-keyscan -H example.com >> ./backrest/ssh/known_hosts
 ```
 
 **Important:**
-- **`Host backrest-remote`**: This is a custom alias. You will use this name in the Backrest UI.
+- **`Host backrest-remote`**: This is a custom alias. You will use this name in the C3i Backup One UI.
 - **`HostName`**: The actual IP address or hostname of your remote server.
 - **`User`**: The username on the remote server.
 - **`IdentityFile`**: This **must be `/root/.ssh/id_rsa`**. This is the path *inside* the container where the key will be mounted.
@@ -104,9 +104,9 @@ After saving the file, restart your container for the changes to take effect:
 docker compose up -d --force-recreate
 ```
 
-### Step 7: Add the Repository in Backrest
+### Step 7: Add the Repository in C3i Backup One
 
-1.  In the Backrest WebUI, navigate to **Repositories** and click **Add Repository**.
+1.  In the C3i Backup One WebUI, navigate to **Repositories** and click **Add Repository**.
 2.  For the **Type**, select **Remote/Cloud**.
 3.  For the **URL**, enter `sftp:backrest-remote:/path/to/your/repo`.
     - Replace `backrest-remote` with the `Host` alias you defined in `backrest/ssh/config`.
@@ -135,4 +135,4 @@ docker compose up -d --force-recreate
 - **Permission Denied:**
   - Double-check the file permissions set in Step 5.
   - Ensure the user on the remote server has write permissions to the repository path.
-- **Check Logs:** Review the Backrest application logs for detailed error messages from Restic.
+- **Check Logs:** Review the C3i Backup One application logs for detailed error messages from Restic.

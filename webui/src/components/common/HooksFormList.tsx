@@ -370,7 +370,7 @@ const hookTypes: {
           token: "",
           template: "{{ .Summary }}",
           titleTemplate:
-            "Backrest {{ .EventName .Event }} in plan {{ .Plan.Id }}",
+            "C3i Backup One {{ .EventName .Event }} in plan {{ .Plan.Id }}",
           priority: 5,
         },
         conditions: [],

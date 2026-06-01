@@ -1,6 +1,6 @@
 # Hooks
 
-Hooks in Backrest allow you to respond to various operation lifecycle events, enabling automation and monitoring of your backup operations. This document explains how to configure and use hooks effectively.
+Hooks in C3i Backup One allow you to respond to various operation lifecycle events, enabling automation and monitoring of your backup operations. This document explains how to configure and use hooks effectively.
 
 ## Event Types
 
@@ -33,7 +33,7 @@ Hooks can be triggered by the following events:
 
 ## Notification Services
 
-Backrest supports multiple notification services for hook delivery:
+C3i Backup One supports multiple notification services for hook delivery:
 
 | Service  | Description                            | Documentation                                                                                       |
 | -------- | -------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -48,7 +48,7 @@ Backrest supports multiple notification services for hook delivery:
 
 The Healthchecks hook type is specifically designed to integrate with [Healthchecks.io](https://healthchecks.io/) or compatible self-hosted instances. 
 
-When configured, Backrest automatically appends the correct status endpoint to your webhook URL based on the event type:
+When configured, C3i Backup One automatically appends the correct status endpoint to your webhook URL based on the event type:
 - **Start events** (e.g., `CONDITION_SNAPSHOT_START`): Appends `/start` to the URL.
 - **Error events** (e.g., `CONDITION_SNAPSHOT_ERROR`): Appends `/fail` to the URL.
 - **Log events**: Appends `/log` to the URL.
@@ -58,7 +58,7 @@ It also sends the formatted template summary as the HTTP POST body in plain text
 
 ## Error Handling
 
-Command hooks support specific error behaviors that determine how Backrest responds to hook failures:
+Command hooks support specific error behaviors that determine how C3i Backup One responds to hook failures:
 
 - `ON_ERROR_IGNORE`: Continue execution despite hook failure
 - `ON_ERROR_CANCEL`: Stop the operation but don't trigger error handlers

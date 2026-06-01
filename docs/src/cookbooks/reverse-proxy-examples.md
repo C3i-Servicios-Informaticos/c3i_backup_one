@@ -2,10 +2,10 @@
 
 ## Introduction
 
-Reverse proxies like [Caddy](https://caddyserver.com/) and [Traefik](https://traefik.io/traefik/) can be configured to front and protect your Backrest endpoint.
+Reverse proxies like [Caddy](https://caddyserver.com/) and [Traefik](https://traefik.io/traefik/) can be configured to front and protect your C3i Backup One endpoint.
 
 ## Using Caddy
-For this example, we'll be running Caddy alongside Backrest via docker-compose.yaml but you can adapt this config to your environment.
+For this example, we'll be running Caddy alongside C3i Backup One via docker-compose.yaml but you can adapt this config to your environment.
 
 Here is an example docker-compose.yaml:
 ```
@@ -52,7 +52,7 @@ backrest.example.com {
 ```
 
 Some items to note:
-- The `reverse_proxy` line in your Caddyfile **must** match your Backrest container's name!
+- The `reverse_proxy` line in your Caddyfile **must** match your C3i Backup One container's name!
 - You can extend this with [acme_dns](https://github.com/caddy-dns/acmedns) to obtain certificates for your endpoint.
 - `tls internal` means that Caddy will generate and utilize a self-signed certificate.
 - You can create an [authentication portal](https://caddyserver.com/docs/json/apps/http/servers/routes/handle/auth_portal/) to allow login via Google, etc.

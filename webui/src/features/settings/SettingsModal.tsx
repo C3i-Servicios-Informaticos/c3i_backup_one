@@ -320,7 +320,7 @@ export const SettingsModal = () => {
               checked={getField(["auth", "disabled"]) || false}
               onChange={(v) => updateField(["auth", "disabled"], v)}
               label={m.settings_auth_disable()}
-              hint="When disabled, no login is required to access Backrest."
+              hint="When disabled, no login is required to access C3i Backup One."
             />
 
             <Field label={m.settings_auth_users()} required>
@@ -396,7 +396,7 @@ export const SettingsModal = () => {
           <SectionCard
             icon={<FiGlobe size={16} />}
             title={m.settings_section_multihost()}
-            description="Peer-to-peer synchronisation between Backrest instances."
+            description="Peer-to-peer synchronisation between C3i Backup One instances."
           >
             <Stack gap={4}>
               <Text fontStyle="italic" fontSize="sm">
@@ -448,7 +448,7 @@ export const SettingsModal = () => {
           <SectionCard
             icon={<FiLock size={16} />}
             title="Pairing Tokens"
-            description="Tokens that can be shared with other Backrest instances to simplify peering."
+            description="Tokens that can be shared with other C3i Backup One instances to simplify peering."
           >
             <Stack gap={3} width="full">
               {(config.multihost?.pairingTokens || []).map(
@@ -787,7 +787,7 @@ const KnownHostsList = ({
         <Box p={4} borderWidth="1px" borderRadius="md">
           <Stack gap={3}>
             <Text fontSize="sm" color="gray.500">
-              Paste a pairing token from another Backrest server, or leave blank
+              Paste a pairing token from another C3i Backup One server, or leave blank
               to configure manually.
             </Text>
             <Field label="Pairing Token (optional)">

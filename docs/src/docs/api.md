@@ -1,8 +1,8 @@
 # API
 
-Backrest provides a limited HTTP API for interacting with the backrest service. To use the API without a username and password authentication must be disabled. Otherwise, provide a username and password with basic auth headers. e.g. `curl http://localhost:9898/v1/<endpoint> -u USERNAME:PASSWORD`. Usernames and passwords consisting of upper and lower case letters (A-Z, a-z) and numbers (0-9) will work as is. Special characters may need to be escaped. e.g. single quotes in a password `-u 'user:p@ss\'w0rd'`
+C3i Backup One provides a limited HTTP API for interacting with the backrest service. To use the API without a username and password authentication must be disabled. Otherwise, provide a username and password with basic auth headers. e.g. `curl http://localhost:9898/v1/<endpoint> -u USERNAME:PASSWORD`. Usernames and passwords consisting of upper and lower case letters (A-Z, a-z) and numbers (0-9) will work as is. Special characters may need to be escaped. e.g. single quotes in a password `-u 'user:p@ss\'w0rd'`
 
-All of Backrest's API endpoints are defined as a gRPC service and are exposed over HTTP by a JSON RPC gateway for easy scripting. For the full service definition see [service.proto](https://github.com/garethgeorge/backrest/blob/main/proto/v1/service.proto).
+All of C3i Backup One's API endpoints are defined as a gRPC service and are exposed over HTTP by a JSON RPC gateway for easy scripting. For the full service definition see [service.proto](https://github.com/garethgeorge/backrest/blob/main/proto/v1/service.proto).
 
 ::: warning
 Only the APIs documented below are considered stable, other endpoints may be subject to change.

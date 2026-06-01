@@ -1,15 +1,15 @@
 # Restore Files
 
-This guide will walk you through the basic steps of using Backrest to restore files.
+This guide will walk you through the basic steps of using C3i Backup One to restore files.
 
 ## Prerequisites
 
-- A running Backrest instance
-- A repo configured in Backrest
+- A running C3i Backup One instance
+- A repo configured in C3i Backup One
 
 ## Indexing Snapshots
 
-A snapshot is a point-in-time backup of your files. This is interchangeable with the term "backup". To restore files, you first need to index the snapshots in your repository. This is done automatically by Backrest when you 
+A snapshot is a point-in-time backup of your files. This is interchangeable with the term "backup". To restore files, you first need to index the snapshots in your repository. This is done automatically by C3i Backup One when you 
 
  1. first add a repository
  2. run a backup
@@ -36,9 +36,9 @@ If your repo is using remote storage browsing can be very slow as restic fetches
 Once you have found the directory you'd like to restore, hover over the directory and click the restore icon and select "Restore to path". The restore location options are
 
  1. Restore to a specific location, the default populated location will be the folder name + the first 8 digets of the snapshot's ID.
- 2. If the location is left empty, Backrest will attempt to locate and restore to your Downloads directory.
+ 2. If the location is left empty, C3i Backup One will attempt to locate and restore to your Downloads directory.
 
-Once you have selected a location, click "Restore". Backrest will begin the restore process as a new operation visible at the top of the operation tree. You can monitor the progress of the restore in the operation tree.
+Once you have selected a location, click "Restore". C3i Backup One will begin the restore process as a new operation visible at the top of the operation tree. You can monitor the progress of the restore in the operation tree.
 
 <img src="/screenshots/restore-progress.png" alt="Restore Progress" style="width: 700px; height: auto;" />
 

@@ -211,7 +211,7 @@ const SftpConfigSection = ({
               <Stack gap={3} p={2}>
                 <CText fontSize="sm">
                   Click "Generate Key" to create an SSH key pair for this host.
-                  Backrest will attempt to scan the host key into known_hosts automatically.
+                  C3i Backup One will attempt to scan the host key into known_hosts automatically.
                   You will then need to add the generated public key to{" "}
                   <Code>~/.ssh/authorized_keys</Code> on the remote server.
                 </CText>
@@ -814,7 +814,7 @@ export const AddRepoModal = ({ template, onSaveOverride }: { template: Repo | nu
             <SectionCard
               icon={<FiLink size={16} />}
               title="Connection"
-              description="Where the repo lives and how Backrest authenticates."
+              description="Where the repo lives and how C3i Backup One authenticates."
             >
               <Stack gap={4}>
                 <Field

@@ -1,13 +1,13 @@
 # Getting Started
 
-This guide will walk you through the basic steps to setup a new [Backrest](https://github.com/garethgeorge/backrest) instance.
+This guide will walk you through the basic steps to setup a new [C3i Backup One](https://github.com/garethgeorge/backrest) instance.
 
 ## Prerequisites
 
 Before diving into configuration, you should have:
-- Backrest installed and running on your system.
+- C3i Backup One installed and running on your system.
 - Your storage provider credentials ready (if using remote storage).
-- Access to Backrest via your browser (typically `http://localhost:9898`).
+- Access to C3i Backup One via your browser (typically `http://localhost:9898`).
 
 ## Installation
 
@@ -15,11 +15,11 @@ Please refer to the <a href="https://github.com/garethgeorge/backrest" target="_
 
 ## Core Concepts
 
-Let's understand some key terminology used within Backrest:
+Let's understand some key terminology used within C3i Backup One:
 
-- **Restic Repository**: The underlying storage location where your backup data is kept. While Backrest manages this for you, understanding this concept allows you to interact directly with your backups using the restic CLI if needed.
+- **Restic Repository**: The underlying storage location where your backup data is kept. While C3i Backup One manages this for you, understanding this concept allows you to interact directly with your backups using the restic CLI if needed.
 
-- **Backrest Repository**: A configuration set in Backrest that defines:
+- **C3i Backup One Repository**: A configuration set in C3i Backup One that defines:
   - Where your backup data is stored
   - Encryption credentials
   - Backup orchestration settings
@@ -40,7 +40,7 @@ Let's understand some key terminology used within Backrest:
 ## Initial Setup
 
 ::: info
-After installation, access Backrest at `http://localhost:9898` (or your configured port). You'll need to complete the initial setup process below.
+After installation, access C3i Backup One at `http://localhost:9898` (or your configured port). You'll need to complete the initial setup process below.
 :::
 
 ### 1. Instance Configuration
@@ -48,13 +48,13 @@ After installation, access Backrest at `http://localhost:9898` (or your configur
 <img src="/screenshots/settings-view.png" alt="Settings View" style="max-width: 100%; border-radius: 8px; margin-bottom: 20px;">
 
 #### Instance ID
-- A unique identifier for your Backrest installation.
-- Used to distinguish snapshots from different Backrest instances.
+- A unique identifier for your C3i Backup One installation.
+- Used to distinguish snapshots from different C3i Backup One instances.
 - **Important**: Cannot be changed via the UI after initial setup.
 
 #### Authentication
 - Set your username and password during first launch.
-- To reset credentials, delete the `"users"` key from your configuration file and **restart the Backrest service**:
+- To reset credentials, delete the `"users"` key from your configuration file and **restart the C3i Backup One service**:
   - Linux/macOS: `~/.config/backrest/config.json`
   - Windows: `%appdata%\backrest\config.json`
 - Authentication can be disabled for local installations or when using an authenticating reverse proxy.
@@ -98,7 +98,7 @@ Click **"Add Repo"** to configure your backup storage location. You can either c
    - **Check Policy**: Schedule for backup integrity verification.
 
 ::: info
-Once you've saved the repository, navigate to the Repository View and click **"Index Snapshots"** to import any previous backups. Backrest will also automatically index snapshots the first time a backup plan runs successfully.
+Once you've saved the repository, navigate to the Repository View and click **"Index Snapshots"** to import any previous backups. C3i Backup One will also automatically index snapshots the first time a backup plan runs successfully.
 :::
 
 ### 3. Backup Plan Configuration
@@ -135,8 +135,8 @@ Create a backup plan by clicking **"Add Plan"** and configuring these settings:
      - **Time-based**: Keep snapshots by age (e.g., daily for 7 days, weekly for 4 weeks).
      - **None**: Manual retention management.
 
-Success! Now that Backrest is configured, you can sit back and let it manage your backups. Monitor the status of your backups in the UI and restore files from snapshots as needed.
+Success! Now that C3i Backup One is configured, you can sit back and let it manage your backups. Monitor the status of your backups in the UI and restore files from snapshots as needed.
 
 ::: warning
-Make sure to save a copy of your repository credentials and encryption keys (e.g., password) in a safe place. Losing these will prevent you from restoring your data. Consider storing your entire Backrest configuration (typically `~/.config/backrest/config.json`) in a secure location, such as a password manager or encrypted storage.
+Make sure to save a copy of your repository credentials and encryption keys (e.g., password) in a safe place. Losing these will prevent you from restoring your data. Consider storing your entire C3i Backup One configuration (typically `~/.config/backrest/config.json`) in a secure location, such as a password manager or encrypted storage.
 :::

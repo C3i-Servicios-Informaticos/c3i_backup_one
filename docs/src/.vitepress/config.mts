@@ -1,12 +1,12 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "Backrest",
+  title: "C3i Backup One",
   description: "Web UI and orchestrator for restic backup",
   base: "/backrest/",
   cleanUrls: true,
   themeConfig: {
-    logo: '/logo.svg', // Assuming there's a logo or comment out if none
+    logo: { light: '/logo.svg', dark: '/logo-dark.svg' },
     search: {
       provider: 'local'
     },
